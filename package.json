@@ -1,19 +1,14 @@
 {
-  "name": "dvs-call-logger",
+  "name": "call-logger",
   "version": "1.0.0",
-  "description": "Call logging backend that writes into Google Sheets",
   "main": "server.js",
   "type": "module",
-  "engines": {
-    "node": ">=18"
+  "dependencies": {
+    "express": "^4.18.2",
+    "@google-cloud/google-auth-library": "^9.0.0",
+    "googleapis": "^127.0.0"
   },
   "scripts": {
     "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "googleapis": "^105.0.0",
-    "cors": "^2.8.5",
-    "body-parser": "^1.20.2"
   }
 }
