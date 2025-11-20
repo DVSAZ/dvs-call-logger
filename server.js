@@ -8,16 +8,19 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // =========================
-// GOOGLE SHEETS CONNECTION
+// ENV VARIABLES (Render)
 // =========================
+const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID;
 
-// Spreadsheet ID from Google Sheets URL:
-const SPREADSHEET_ID = "YOUR_SHEET_ID_HERE";   // <-- replace this
+// Load private key correctly
+const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
 
-// Authorized Google service account
 const auth = new google.auth.GoogleAuth({
-  keyFile: "service-account.json",
-  scopes: ["https://www.googleapis.com/auth/spreadsheets"]
+  credentials: {
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    private_key: privateKey,
+  },
+  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
 const sheets = google.sheets({ version: "v4", auth });
@@ -64,7 +67,7 @@ app.post("/log-call", async (req, res) => {
 // =========================
 
 app.get("/", (req, res) => {
-  res.send("Call logger is running");
+  res.send("Call logger is running.");
 });
 
 const PORT = process.env.PORT || 3000;
