@@ -4,6 +4,9 @@
   "description": "Call logging backend that writes into Google Sheets",
   "main": "server.js",
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node server.js"
   },
