@@ -28,8 +28,19 @@ const sheets = google.sheets({ version: "v4", auth });
 // =========================
 // WRITE CALL LOG
 // =========================
+// SECURITY CHECK - require token
+function validateToken(req, res, next) {
+  const header = req.headers.authorization || "";
+  const token = header.replace("Bearer ", "").trim();
 
-app.post("/log-call", async (req, res) => {
+  if (token !== process.env.LOG_TOKEN) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  next();
+}
+
+app.post("/log-call", validateToken, async (req, res) => {
   try {
     const body = req.body;
 
